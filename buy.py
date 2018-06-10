@@ -40,8 +40,8 @@ class Buy():
         '''
         账户中的钱
         '''    
-        eth_num  = float(self._fcoin.get_coin_balance('eth')) * 0.98
-        usdt_num  = float(self._fcoin.get_coin_balance('usdt')) * 0.98
+        eth_num  = float(self._fcoin.get_coin_balance('ft')) * 0.5
+        usdt_num  = float(self._fcoin.get_coin_balance('usdt')) * 0.8
 
         '''
          一个eth能买多少个usdt
@@ -61,10 +61,14 @@ class Buy():
         print('eth price')
         print(min_price)
 
+        self._fcoin.sell(self._trade_pair,price = self.trunc(max_price,2),amount = self.trunc(eth_num,1) , type = self._type) 
 
+        if min_price == 0 :
+            buy_amount = 0
+        else:
+            buy_amount = eth_num / min_price
 
-        self._fcoin.sell(self._trade_pair,price = self.trunc(max_price,2),amount = eth_num , type = self._type) 
-        self._fcoin.buy(self._trade_pair,price = self.trunc(min_price,2),amount = self.trunc(usdt_num / min_price,4) , type = self._type) 
+        self._fcoin.buy(self._trade_pair,price = self.trunc(min_price,2),amount = self.trunc(buy_amount,2) , type = self._type) 
        
         '''
         if  float(usdt_num) > 1:
