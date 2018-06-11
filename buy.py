@@ -3,6 +3,7 @@ import datetime
 import schedule
 import threading
 import time
+import random
 
 '''
 多线程定时器买和卖
@@ -40,8 +41,8 @@ class Buy():
         '''
         账户中的钱
         '''    
-        eth_num  = float(self._fcoin.get_coin_balance('ft')) * 0.5
-        usdt_num  = float(self._fcoin.get_coin_balance('usdt')) * 0.8
+        eth_num  = float(self._fcoin.get_coin_balance('ft')) * 0.99
+        usdt_num  = float(self._fcoin.get_coin_balance('usdt')) * 0.98
 
         '''
          一个eth能买多少个usdt
@@ -49,10 +50,11 @@ class Buy():
 
         max_price = float(self._fcoin.get_coin_price_max(self._trade_pair))
         min_price = float(self._fcoin.get_coin_price_min(self._trade_pair))
+        
 
         print('usdt num:')
         print(usdt_num)
-        print('eth num:')
+        print('ft num:')
         print(eth_num)
 
         print('usdt price:')
@@ -61,14 +63,16 @@ class Buy():
         print('eth price')
         print(min_price)
 
-        self._fcoin.sell(self._trade_pair,price = self.trunc(max_price,2),amount = self.trunc(eth_num,1) , type = self._type) 
+        self._fcoin.sell(self._trade_pair,price = self.trunc(max_price,6),amount = self.trunc(random.uniform(1,200),2) , type = self._type) 
 
         if min_price == 0 :
             buy_amount = 0
         else:
-            buy_amount = eth_num / min_price
+            buy_amount = usdt_num / min_price
 
-        self._fcoin.buy(self._trade_pair,price = self.trunc(min_price,2),amount = self.trunc(buy_amount,2) , type = self._type) 
+        print('buy amount')
+        print(buy_amount)    
+        self._fcoin.buy(self._trade_pair,price = self.trunc(min_price,6),amount = self.trunc(random.uniform(1,200),2) , type = self._type) 
        
         '''
         if  float(usdt_num) > 1:

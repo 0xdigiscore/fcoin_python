@@ -5,7 +5,7 @@ import schedule
 import time
 
 fcoin = Fcoin()
-fcoin.auth('5418eaac7f384e8ebf76246860e629f7', '85f6d51358f5467faa1199e18810a8b9')
+fcoin.auth('', '')
 coin_buy = Buy('ftusdt',fcoin=fcoin,type='limit')
 
 def buyTask():
@@ -14,7 +14,6 @@ def buyTask():
 
 def run():
     schedule.every(1).seconds.do(buyTask)
-
     while True:
         schedule.run_pending()
         

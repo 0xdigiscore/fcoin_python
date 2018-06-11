@@ -99,7 +99,7 @@ class Fcoin():
     '''
     def get_trades(self,symbol):
         """get detail trade"""
-        return self.public_request('GET', 'market/trades/{symbol}?limit=30'.format(symbol=symbol))
+        return self.public_request('GET', 'market/trades/{symbol}?limit=10'.format(symbol=symbol))
 
     # 查你账户里有多钱
     def get_balance(self):
@@ -121,8 +121,8 @@ class Fcoin():
             '''
              获取最低币价，接口目前只返回10个，为了快速交易
             '''   
-            price = sorted(price)
-            return price[15]
+            price = sum(price) /10
+            return price
         except:
             return 0    
 
@@ -133,8 +133,8 @@ class Fcoin():
             '''
              获取最低币价，接口目前只返回10个，为了快速交易
             '''   
-            price = sorted(price)
-            return price[15]
+            price = sum(price) / 10
+            return price
         except:
             return 0            
        
@@ -159,7 +159,8 @@ class Fcoin():
            '''   
            return min(amount)  
         except:
-           return 0              
+           return 0   
+
     def list_orders(self, **payload):
         """get orders"""
         return self.signed_request('GET','orders', **payload)
